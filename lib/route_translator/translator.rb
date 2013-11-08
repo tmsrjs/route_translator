@@ -22,7 +22,7 @@ module RouteTranslator
 
     def self.translations_for(app, conditions, requirements, defaults, route_name, anchor, route_set, &block)
       I18n.available_locales.each do |locale|
-        block.call(app, *translate_args(conditions, requirements, defaults, route_name, route_set, locale), anchor)
+        block.call(app, *translate_args(conditions, requirements, defaults, route_name, route_set, locale) << anchor)
       end
       block.call(app, conditions, requirements, defaults, route_name, anchor) if RouteTranslator.config.generate_unlocalized_routes
       add_untranslated_helpers_to_controllers_and_views(route_name, route_set.named_routes.module)
